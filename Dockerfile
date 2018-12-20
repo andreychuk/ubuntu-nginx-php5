@@ -2,16 +2,16 @@ FROM ubuntu:16.04
 
 LABEL maintainer="mobingi,Inc."
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
 		nginx \
 		software-properties-common \
-		supervisor \
-	&& apt-get clean \
-	&& rm -fr /var/lib/apt/lists/*
+		supervisor
 
 RUN LC_ALL=C.UTF-8 add-apt-repository ppa:ondrej/php
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
 		php5.6 \
 		libapache2-mod-php5.6 \
 		php5.6-cli \
@@ -33,8 +33,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 		php-pear \
 		php-redis \
 		curl \
-	&& apt-get clean \
-	&& rm -fr /var/lib/apt/lists/*
+		libstdc++6 \
+		xfonts-base \
+		xfonts-75dpi \
+		libxext6 \
+		fontconfig \
+		libxrender1 \
+		wget 
+RUN apt-get clean
+RUN rm -fr /var/lib/apt/lists/*
 
 RUN sed -i \
 	-e "s/keepalive_timeout 65;/keepalive_timeout 2;\n\tclient_max_body_size 100m;/" \
